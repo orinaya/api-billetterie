@@ -1,5 +1,5 @@
 // Modèles de données
-
+const bcrypt = require("bcrypt");
 class Concert {
   constructor(id, artist_name, date, location, description, number_seats) {
     this.id = id;
@@ -14,23 +14,23 @@ class Concert {
     return this.artist_name + ` est en concert à ` + this.location + ` le ` + this.date;
   }
 }
+class User {
+  constructor(id, pseudo, password = "", is_admin = false) {
+    this.id = id;
+    this.pseudo = pseudo;
+    this.password = bcrypt.hashSync(password, 5);
+    this.is_admin = is_admin;
+  }
+}
 
-// class Reservation {
-//   constructor(id, status, date_reservation, id_concert) {
-//     this.id = id;
-//     this.status = status;
-//     this.date_reservation = date_reservation;
-//     this.id_concert = id_concert;
-//   }
-// }
-
-// class User {
-//   constructor(id, pseudo, is_admin) {
-//     this.id = id;
-//     this.pseudo = pseudo;
-//     this.is_admin = is_admin;
-//   }
-// }
+class Reservation {
+  constructor(id, status, date_reservation, id_concert) {
+    this.id = id;
+    this.status = status;
+    this.date_reservation = date_reservation;
+    this.id_concert = id_concert;
+  }
+}
 
 // base de données
 const concerts = [
@@ -116,33 +116,32 @@ const concerts = [
   ),
 ];
 
-concerts.forEach((concert) => console.log(concert.toString()));
+// concerts.forEach((concert) => console.log(concert.toString()));
 
-// const users = [
-//   new User(1, "metalhead01", true),
-//   new User(2, "darklord92", false),
-//   new User(3, "thrashmaster", false),
-//   new User(4, "ironfist", true),
-//   new User(5, "headbanger666", false),
-//   new User(6, "blackmetalqueen", false),
-//   new User(7, "megadethfan", false),
-//   new User(8, "doomwizard", true),
-//   new User(9, "vikingblood", false),
-//   new User(10, "gothicghoul", false),
-// ];
+const users = [
+  new User(1, "metalhead01", "1234", true),
+  new User(2, "darklord92", "1234", false),
+  new User(3, "thrashmaster", "1234", false),
+  new User(4, "ironfist", "1234", true),
+  new User(5, "headbanger666", "1234", false),
+  new User(6, "blackmetalqueen", "1234", false),
+  new User(7, "megadethfan", "1234", false),
+  new User(8, "doomwizard", "1234", true),
+  new User(9, "vikingblood", "1234", false),
+  new User(10, "gothicghoul", "1234", false),
+];
 
-// const reservations = [
-//   new Reservation(1, 1, "to_confirm", new Date(2024, 10, 1, 10, 30, 0), 1), // Réservation pour le concert de Ghost
-//   new Reservation(2, 2, "confirmed", new Date(2024, 10, 2, 14, 0, 0), 2), // Réservation pour le concert de Iron Maiden
-//   new Reservation(3, 3, "canceled", new Date(2024, 10, 3, 9, 0, 0), 3), // Réservation pour le concert de Slipknot
-//   new Reservation(4, 4, "confirmed", new Date(2024, 10, 4, 11, 45, 0), 4), // Réservation pour le concert de Metallica
-//   new Reservation(5, 5, "to_confirm", new Date(2024, 10, 5, 16, 20, 0), 5), // Réservation pour le concert de Slayer
-//   new Reservation(6, 6, "confirmed", new Date(2024, 10, 6, 12, 10, 0), 6), // Réservation pour le concert de Black Sabbath
-//   new Reservation(7, 7, "canceled", new Date(2024, 10, 7, 8, 55, 0), 7), // Réservation pour le concert de Megadeth
-//   new Reservation(8, 8, "to_confirm", new Date(2024, 10, 8, 14, 35, 0), 8), // Réservation pour le concert de System of a Down
-//   new Reservation(9, 9, "confirmed", new Date(2024, 10, 9, 17, 0, 0), 9), // Réservation pour le concert de Pantera
-//   new Reservation(10, 10, "to_confirm", new Date(2024, 10, 10, 19, 15, 0), 10), // Réservation pour le concert de Judas Priest
-// ];
+const reservations = [
+  new Reservation(1, 1, "to_confirm", new Date(2024, 10, 1, 10, 30, 0), 1),
+  new Reservation(2, 2, "confirmed", new Date(2024, 10, 2, 14, 0, 0), 2),
+  new Reservation(3, 3, "canceled", new Date(2024, 10, 3, 9, 0, 0), 3),
+  new Reservation(4, 4, "confirmed", new Date(2024, 10, 4, 11, 45, 0), 4),
+  new Reservation(5, 5, "to_confirm", new Date(2024, 10, 5, 16, 20, 0), 5),
+  new Reservation(6, 6, "confirmed", new Date(2024, 10, 6, 12, 10, 0), 6),
+  new Reservation(7, 7, "canceled", new Date(2024, 10, 7, 8, 55, 0), 7),
+  new Reservation(8, 8, "to_confirm", new Date(2024, 10, 8, 14, 35, 0), 8),
+  new Reservation(9, 9, "confirmed", new Date(2024, 10, 9, 17, 0, 0), 9),
+  new Reservation(10, 10, "to_confirm", new Date(2024, 10, 10, 19, 15, 0), 10),
+];
 
-// module.exports = {Concert, Reservation, User, concerts, users, reservations};
-module.exports = {concerts};
+module.exports = {Concert, User, concerts, users, reservations, Reservation};

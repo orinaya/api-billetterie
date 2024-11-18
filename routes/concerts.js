@@ -19,8 +19,9 @@ router.get("/concerts/:id(\\d+)", (req, res, next) => {
     console.log("Le concert n'a pas été trouvé");
   }
 
-  const mapConcertoResourceObject = hal.mapConcertoResourceObject(concert);
-  res.status(200).json(mapConcertoResourceObject);
+  const concertResourceObject = hal.mapConcertToResourceObject(concert);
+
+  res.status(200).json(concertResourceObject);
 });
 
 module.exports = router;
